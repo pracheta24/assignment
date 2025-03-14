@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Image Slider</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #121212, #060506);
+        }
+
+        .slider-container {
+            position: relative;
+            width: 600px;
+            height: 350px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .caption {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .slider-container:hover .caption {
+            opacity: 1;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.5);
+            color: black;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slider-container">
+        <button class="nav-button prev" onclick="prevImage()">&#10094;</button>
+        <img id="sliderImage" src="" alt="Image Slider">
+        <div class="caption" id="imageCaption"></div>
+        <button class="nav-button next" onclick="nextImage()">&#10095;</button>
+    </div>
+
+    <script>
+        // Image array with captions
+        const images = [
+            { url: "https://www.w3schools.com/w3images/lights.jpg", caption: "Beautiful City Lights" },
+            { url: "https://www.w3schools.com/w3images/nature.jpg", caption: "Peaceful Green Nature" },
+            { url: "https://www.w3schools.com/w3images/mountains.jpg", caption: "Majestic Mountains" },
+            { url: "https://www.w3schools.com/w3images/forest.jpg", caption: "Serene Forest Pathway" },
+            { url: "https://www.w3schools.com/w3images/underwater.jpg", caption: "Mysterious Underwater World" }
+        ];
+
+        let currentIndex = 0; // Track current image
+
+        // Function to update image
+        function updateImage() {
+            const imgElement = document.getElementById("sliderImage");
+            const captionElement = document.getElementById("imageCaption");
+
+            imgElement.style.opacity = "0"; // Fade-out effect
+            setTimeout(() => {
+                imgElement.src = images[currentIndex].url;
+                captionElement.innerText = images[currentIndex].caption;
+                imgElement.style.opacity = "1"; // Fade-in effect
+            }, 300);
+        }
+
+        // Next Image
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateImage();
+        }
+
+        // Previous Image
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateImage();
+        }
+
+        // Initial Image Load
+        updateImage();
+    </script>
+
+</body>
+</html>
+
+

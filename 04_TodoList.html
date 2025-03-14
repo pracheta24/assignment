@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List using JavaScript & DOM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            width: 350px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #764ba2;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        button {
+            background: #764ba2;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #667eea;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background: #f4f4f4;
+            padding: 12px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 5px;
+            transition: 0.3s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .delete-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: darkred;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>To-Do List 📝</h2>
+        <div class="input-container">
+            <input type="text" id="taskInput" placeholder="Enter a task...">
+            <button id="addTaskBtn">Add</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+
+        const taskInput = document.getElementById("taskInput");
+        const addTaskBtn = document.getElementById("addTaskBtn");
+        const taskList = document.getElementById("taskList");
+
+        // Function to add a new task
+        function addTask() {
+            const taskText = taskInput.value.trim();
+
+            if (taskText === "") {
+                alert("Please enter a task!");
+                return;
+            }
+
+            // Creating list item using DOM
+            const li = document.createElement("li");
+            li.textContent = taskText;
+
+            // Creating delete button using DOM
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "X";
+            deleteBtn.classList.add("delete-btn");
+
+            deleteBtn.addEventListener("click", function () {
+                taskList.removeChild(li);
+            });
+
+            li.appendChild(deleteBtn);
+            taskList.appendChild(li);
+
+            taskInput.value = "";
+        }
+
+        addTaskBtn.addEventListener("click", addTask);
+
+        taskInput.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                addTask();
+            }
+        });
+    </script>
+
+</body>
+</html>
+
